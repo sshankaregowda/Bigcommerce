@@ -1,0 +1,27 @@
+<% content_for(:title) {'Orders Details'} %>
+
+<table class="table table-striped table-bordered table-hover">
+<thead class="table-dark">
+  <tr>
+    <th>Order Id</th>
+    <th>Customer Id</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Total Inc Tax</th>
+    <th colspan="3"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <%  @results.flatten.each_with_index do |order,index| %>
+    <tr>
+      <td><%= order["id"] %></td>
+      <td><%= order["customer_id"] %></td>
+      <td><%= order["billing_address"]["first_name"] %></td>
+      <td><%= order["billing_address"]["last_name"] %></td>
+      <td><%= @orders.group_by{|a| a["customer_id"]}.values[index].sum { |h| h['total_inc_tax'] } %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+     
